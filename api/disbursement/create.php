@@ -34,7 +34,7 @@ if (!curl_exec($ch)) {
     // if curl_exec() returned false and thus failed
     echo json_encode(
         array(
-        'err' => curl_error($ch),
+        'errors' => curl_error($ch),
         'message' => 'something went wrong'
         )
       );
@@ -55,7 +55,9 @@ curl_close($ch);
   if ($response->time_served == "0000-00-00 00:00:00") {
       $response->time_served = "1000-01-01 00:00:00";
   }
+  
  
+  //data binding
   $disbursement->id = $response->id;
   $disbursement->amount = $response->amount;
   $disbursement->status = $response->status;
@@ -69,7 +71,7 @@ curl_close($ch);
   $disbursement->fee = $response->fee;
   $disbursement->name = $response->name;
 
-  // Create Category
+  // Create Disbusrsment
   if($disbursement->create()) {
     echo json_encode(
       array(
