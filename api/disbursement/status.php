@@ -1,14 +1,16 @@
 <?php
   // Headers
   header('Access-Control-Allow-Origin: *');
-  header('Content-Type: application/json');
+  header('Content-Type: application/x-www-form-urlencoded');
+  header('Access-Control-Allow-Methods: GET');
+  header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type, Access-Control-Allow-Methods, Authorization,X-Requested-With');
 
   include_once '../../config/Database.php';
   include_once '../../models/Disbursement.php';
 
 
 //get request body
-$data = file_get_contents("php://input");
+$id_disbursement = isset($_GET['id']) ? $_GET['id'] : die();
 
 //init request to 3rd party 
 $ch = curl_init(); 
@@ -16,14 +18,11 @@ $username = "SHl6aW9ZN0xQNlpvTzduVFlLYkc4TzRJU2t5V25YMUp2QUVWQWh0V0tadW1vb0N6cXA
 
 $headers = array(
     'Content-Type: application/x-www-form-urlencoded',
-    'Authorization: Basic '. ($username),
-    'Access-Control-Allow-Methods: POST',
+    'Authorization: Basic '. ($username)
 );    
     curl_setopt_array($ch, array(
-    CURLOPT_URL => 'https://nextar.flip.id/disburse',
+    CURLOPT_URL => 'https://nextar.flip.id/disburse/' . $id_disbursement,
     CURLOPT_HTTPHEADER => $headers,
-    CURLOPT_POST => true,
-    CURLOPT_POSTFIELDS => $data,
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_FAILONERROR => true,
 ));
@@ -50,6 +49,7 @@ curl_close($ch);
   // Get raw posted data
   $response = json_decode($output);
 
+  //check validation for the data because mysql default formating datetime type column
   if ($response->time_served == "0000-00-00 00:00:00") {
       $response->time_served = "1000-01-01 00:00:00";
   }
@@ -69,19 +69,19 @@ curl_close($ch);
   $disbursement->fee = $response->fee;
   $disbursement->name = $response->name;
 
-  // Create Disbusrsment
-  if($disbursement->create()) {
+  // Create update data
+  if($disbursement->update()) {
     echo json_encode(
       array(
       'data' => $response,
-      'message' => 'Disbursement Created'
+      'message' => 'Disbursement Status Updated'
       )
     );
   } else {
     echo json_encode(
       array(
           'data' => null,
-          'message' => 'Disbursement Not Created'
+          'message' => 'Disbursement Status not Updated'
           )
     );
   }
