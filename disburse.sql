@@ -12,3 +12,11 @@ CREATE TABLE IF NOT EXISTS `disbursement` (
   `time_served` datetime NOT NULL,
   PRIMARY KEY (`id`)
 );
+
+LOCK TABLES `disbursement` WRITE;
+
+INSERT INTO `disbursement` (`id`, `amount`, `status`, `timestamp`, `bank_code`,`account_number`,`beneficiary_name`,`remark`,`receipt`,`fee`,`time_served`)
+VALUES
+	(11212219,'100000', 'PENDING',NOW(),'BCA-911', '1122334455', 'Kiky', 'mantap', 'https://hellow?', '10000', NOW())
+
+UNLOCK TABLES; 

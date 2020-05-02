@@ -1,6 +1,6 @@
 <?php
-  class Disbursement {
-    // DB Stuff
+class Disbursement {
+// DB Stuff
     private $conn;
     private $table = 'disbursement';
 
@@ -16,6 +16,7 @@
     public $receipt;
     public $time_served;
     public $fee;
+    
     // Constructor with DB
     public function __construct($db) {
       $this->conn = $db;
@@ -99,4 +100,4 @@
   return false;
   }
 
-  }
+}
