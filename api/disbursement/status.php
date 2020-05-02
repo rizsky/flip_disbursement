@@ -36,8 +36,8 @@ if (!curl_exec($ch)) {
         )
       );
     exit();
-  
 }    
+
 curl_close($ch);
   // Instantiate DB & connect
   $database = new Database();
@@ -54,20 +54,11 @@ curl_close($ch);
       $response->time_served = "1000-01-01 00:00:00";
   }
   
- 
   //data binding
   $disbursement->id = $response->id;
-  $disbursement->amount = $response->amount;
   $disbursement->status = $response->status;
-  $disbursement->timestamp = $response->timestamp;
-  $disbursement->bank_code = $response->bank_code;
-  $disbursement->account_number = $response->account_number;
-  $disbursement->beneficiary_name = $response->beneficiary_name;
-  $disbursement->remark = $response->remark;
   $disbursement->receipt = $response->receipt;
   $disbursement->time_served = $response->time_served;
-  $disbursement->fee = $response->fee;
-  $disbursement->name = $response->name;
 
   // Create update data
   if($disbursement->update()) {

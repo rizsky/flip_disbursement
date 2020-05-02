@@ -18,7 +18,6 @@
       } catch(PDOException $e) {
         echo 'Connection Error: ' . $e->getMessage();
       }
-
       return $this->conn;
     }
   }

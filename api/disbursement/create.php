@@ -53,7 +53,6 @@ curl_close($ch);
   if ($response->time_served == "0000-00-00 00:00:00") {
       $response->time_served = "1000-01-01 00:00:00";
   }
-  
  
   //data binding
   $disbursement->id = $response->id;
@@ -67,7 +66,6 @@ curl_close($ch);
   $disbursement->receipt = $response->receipt;
   $disbursement->time_served = $response->time_served;
   $disbursement->fee = $response->fee;
-  $disbursement->name = $response->name;
 
   // Create Disbusrsment
   if($disbursement->create()) {

@@ -3,13 +3,13 @@
 > This is a simple PHP REST API from scratch with no framework.
 
 ## Quick Start
-1. setup db in `config/Database.php`, please change it 
+1. setup db in `config/Database.php`, please change it
 2. running the migrate script
 3. running this folder on local server, example in UNIX terminal : `cd PHP-FLIP && php -S localhost:3010`
 
 ## App Info
 1. this services contains of 2 endpoints
-try this using curl
+try this using curl in terminal
 
 - example of create :
 `curl --location --request POST 'http://localhost:3010/api/disbursement/status.php/id?id=11212219' \
